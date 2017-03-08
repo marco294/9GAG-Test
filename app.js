@@ -15,8 +15,6 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 app.engine('html',require('ejs').renderFile);
 
-// uncomment after placing your favicon in /public
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -38,16 +36,31 @@ var db = new redis({
 // for(var i = 0; i < obj.posts.length; i++) {
 //   var post = obj.posts[i];
 //   id.push(post.id);
-//   db.hmset(post.id, {
-//     id:post.id,
-//     url:post.link,
-//     type: post.type,
-//     created_time:post.created_time,
-//     images:post.images,
-//     comments:post.comments,
-//     likes:post.likes,
-//     caption:post.caption
-//   });
+//   if(post.type=='video'){
+//     db.hmset(post.id, {
+//       id:post.id,
+//       url:post.link,
+//       type: post.type,
+//       created_time:post.created_time,
+//       images:post.images,
+//       comments:post.comments,
+//       likes:post.likes,
+//       caption:post.caption,
+//       video:post.video
+//     });
+//   }
+//   else{
+//     db.hmset(post.id, {
+//       id:post.id,
+//       url:post.link,
+//       type: post.type,
+//       created_time:post.created_time,
+//       images:post.images,
+//       comments:post.comments,
+//       likes:post.likes,
+//       caption:post.caption
+//     });
+//   }
 // }
 // db.lpush('posts',id);
 

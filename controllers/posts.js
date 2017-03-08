@@ -37,31 +37,6 @@ router.get('/load/:sortBy', function(req, res) {
   });
 });
 
-// router.get('/details/:sortBy/:next', function(req, res) {
-//   req.db.exists('sortedby_'+req.params.sortBy, function(err,result){
-//     if(!err){
-//       // if the temp sorted list exist
-//       if(result===1){
-//         var index = parseInt(req.params.next);
-//         req.db.lrange('sortedby_'+req.params.sortBy, index, index+9, function (err, keys) {
-//           if(!err){
-//             //console.log('done sorted by '+req.params.sortBy);
-//             multiHGETALL(req.db, keys, function (err, obj){
-//               if(!err){
-//                   res.json(obj);
-//               }
-//             });
-//           }
-//         });
-//       }
-//       // else the temp sorted list expired
-//       else{
-//         //
-//       }
-//     }
-//   });
-// });
-
 // Handle HTTP POST request by sending response of all requested post details
 router.post('/details', function(req, res) {
   // Return the data details according to the ids in POST data

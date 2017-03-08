@@ -1,21 +1,88 @@
 var myApp = angular.module('myApp', ['infinite-scroll']);
 
+// ----------------------Directive-------------------------
+// It used for customizing how to show data in view
+
+// Directive for generate relative time with url link to that IG post
+myApp.directive('time', function () {
+	return{
+		restrict : 'A',
+    	scope:{
+    		// get created_time and url link from user input
+    		creatat: '@',
+      		url: '@',
+	    },
+	    link:function(scope,element,attr){
+	    	// Get the current time and get the relative time according to post created_time
+	    	var current =  Math.round(new Date().getTime() / 1000);
+	    	var s = current -  scope.creatat;
+	    	var relativeTime;
+
+	    	// Calculate the relative time should display in second, minute, hour or day
+	    	if(60>s)
+	    		relativeTime = s + ' seconds';
+	    	else if(3600>s)
+	    		relativeTime = Math.floor(s/60) + ' minutes';
+	    	else if(86400>s)
+	    		relativeTime = Math.floor(s/3600) + ' hours';
+	    	else
+	    		relativeTime = Math.floor(s/86400) + ' days';
+
+	    	// return the relative time with url connect to that IG post
+	    	element.html('<a href="' + scope.url + '" target="_blank">' + relativeTime +' ago</a>');
+	    }
+	};
+});
+
+// Directive for analysis caption with @/# and link those tag to corresponding url
+myApp.directive('caption', function () {
+	return{
+		restrict : 'A',
+    	scope:{
+    		// get caption contents
+      		contents: '@',
+	    },
+	    link:function(scope,element,attr){
+	    	// split the string into multiple strings with white space separator, then store in an array
+	    	var a = scope.contents.split(" ");
+	    	// loop through each string
+			a.forEach(function(x,i){
+				// if the first character of string is @
+				if(x[0] == '@'){
+					// Add an IG link to that tag and store it back to that array
+					a[i] = '<a href="http://www.instagram.com/' + x.substr(1) + '" target="_blank">' + x + '</a>';
+				}
+				// else if the first character of string is #
+				else if(x[0] == '#'){
+					// Add an IG link to that hashtag and store it back to that array
+					a[i] = '<a href="http://www.instagram.com/explore/tags/' + x.substr(1) + '" target="_blank">' + x + '</a>';
+				}
+			});
+			// return the caption by joining the array with white space
+			element.html(a.join(' '));
+	    }
+	};
+});
+
+// -----------------------Controller--------------------------------
 myApp.controller('AppCtrl', function($scope, $http) {
+	// Default all contents about posts to empty/zero
 	$scope.index = 0;
 	$scope.postIds = [];
 	$scope.rows = [];
-	$scope.isBusy = false;
+	// Default state is initializing, not in busy loading posts details and have more posts
 	$scope.isInit = true;
+	$scope.isBusy = false;
 	$scope.noPosts = false;
 
 	// Available select option for sorting, with corresponding value
 	$scope.sortOptions = [
 		{name:"Creation Time", value:"created_time"},
-		{name:"Like", value:"likes"},
-		{name:"Comments", value:"comments"}
+		{name:"Number of Likes", value:"likes"},
+		{name:"Number of Comments", value:"comments"}
 	];
 
-	// The client side run the following at the beginning 
+	// The client side run the following at the beginning
   	// Init the posts by sending http get request to get the default created_time sorted id list
   	$http.get('/posts/load/created_time').then(
 	  	function(res){
@@ -23,7 +90,7 @@ myApp.controller('AppCtrl', function($scope, $http) {
 			$scope.postIds = res.data;
 			// Call function to init the first 9 posts
 			getDetails($http,$scope,true);
-		}, 
+		},
 		function(res){
 			alert("Error during get posts");
 		}
@@ -45,7 +112,7 @@ myApp.controller('AppCtrl', function($scope, $http) {
 				$scope.postIds = res.data;
 				// Call function to init the first 9 posts
 				getDetails($http,$scope,true);
-			}, 
+			},
 			function(res){
 				alert("Error during get posts");
 			}
@@ -77,7 +144,7 @@ function getDetails($http,$scope,isInit){
 	// Get the first 9 photos from the server by POST request
 	$http.post('posts/details', $scope.postIds.slice($scope.index, $scope.index+9)).then(
 		function(res1){
-			// Update the index cursor for next fetching 
+			// Update the index cursor for next fetching
 			$scope.index = $scope.index + 10;
 		  	// Slice the 9 posts into 3 arrays (each represent 1 row in the view)
 		  	var newRow = chunk(detailsFormater(res1.data), 3)
@@ -87,25 +154,24 @@ function getDetails($http,$scope,isInit){
 	  		$scope.rows.push(newRow[2]);
 
 		  	// Change state after the above done
-		  	// if it is Init 
+		  	// if it is Init
 		  	if(isInit)
 		  		// set init done
 		  		$scope.isInit = false;
 		  	else
 		  		//else set not busy
 		  		$scope.isBusy = false;
-		}, 
+		},
 		function(res1){
 			console.log("Error during get posts details");
 		}
 	);
 }
 
-
-// -------- HELPER FUNCTIONS --------
+// ---------------- HELPER FUNCTIONS --------------------
 
 // Helper function to slice the array to n sized chunks
-// It used for show 3 posts in 1 row  
+// It used for show 3 posts in 1 row
 function chunk(arr, size) {
 	var newArr = [];
 	for (var i=0; i<arr.length; i+=size) {
@@ -122,4 +188,3 @@ function detailsFormater(arr){
   	}
   	return newArr;
 }
-

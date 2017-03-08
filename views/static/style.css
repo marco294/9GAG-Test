@@ -1,0 +1,46 @@
+@font-face {
+  font-family: nagomigokubosogothic;
+  src: url("font.otf") format("opentype");
+}
+
+body{
+  font-family: nagomigokubosogothic;
+  color: black;
+  background-color: #FFFFFF;
+}
+
+.top-buffer {
+  margin-top:30px;
+}
+
+.inlineBlock{
+  display: inline-block;
+}
+
+.nonInlineBlock{
+  display: block;
+}
+
+.photo, .video{
+  height: auto;
+  width: 300px;
+}
+
+.postContents{
+  width: 300px;
+}
+
+.footer{
+  margin: 20px;
+  text-align: center;
+}
+
+.col-centered{
+    display:inline-block;
+    float:none;
+    text-align:left;
+    margin-right:-4px;
+}
+.adjust{
+  margin-bottom:8px;
+}
