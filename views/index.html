@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+  <head>
+    <title>9GAG Web Code Test</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/css/bootstrap-select.min.css">
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <div class="container" ng-controller="AppCtrl">
+      <h1 class="inlineBlock">9GAG Web Code Test</h1>
+
+      <div class="dropdown pull-right">
+        <h3 class="inlineBlock top-buffer">Sorted By:</h3>
+        <!-- 
+        Create a select list for user to choose how to sort the posts, default sorted by post creation time 
+        Read the options name from "sortOptions" defined in controller
+        Return the options value to ng-model which will be uesd for http get request to access new sorted posts list according to the user selection
+        -->
+        <select class="selectpicker" ng-model='sortedBy' ng-init="sortedBy = sortOptions[0]" ng-options="option.name for option in sortOptions"  ng-change='sortPosts()'></select>
+      </div>
+
+      <hr>
+      <!-- 
+      Infinite scroll view for display posts
+      call loadMore() when scroll down 
+      -->
+      <div class="scrollContent" infinite-scroll='loadMore()' infinite-scroll-distance='2' infinite-scroll-disabled='isBusy||noPosts'>
+        <div class="row top-buffer" ng-repeat='row in rows'>
+          <div ng-repeat='post in row' class="col-sm-4 col-md-4 col-lg-4">
+            <img class="photo" ng-src='{{post.images}}'>
+          </div>
+          <div style='clear: both;'></div>
+        </div>
+        <div ng-show='isInit'><h2>Inititalizing...</h2></div>
+        <div ng-show='isBusy'><h2>Loading posts...</h2></div>
+        <div ng-show='noPosts'><h2>No more posts.</h2></div>
+      </div>
+
+    </div>
+  </body>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.2/angular.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/js/bootstrap-select.min.js"></script>
+  <script src="controllers/controller.js"></script>
+  <script src="ng-infinite-scroll.js"></script>
+</html>

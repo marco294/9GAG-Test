@@ -1,0 +1,12 @@
+.top-buffer {
+  margin-top:30px;
+}
+
+.inlineBlock{
+  display: inline-block;
+}
+
+.photo{
+  height: 300px;
+  width: auto;
+}

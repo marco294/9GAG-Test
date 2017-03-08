@@ -1,0 +1,47 @@
+<html>
+  <head>
+    <title>GenerateData</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script>
+    $(document).ready(function() {
+        var newJson = [];
+        $.getJSON('data.json', function(json){
+          $.each(json.items, function(key,obj) {
+               if(obj.type=="video"){
+                 //$("#igjson").append('<video controls style="height: auto; width: 300px;"><source type="video/mp4" src="'+obj.videos.standard_resolution.url+'" />');
+                newJson.push ({
+                  id: obj.id,
+                  link: obj.link,
+                  type: obj.type,
+                  created_time: obj.created_time,
+                  images: obj.images.standard_resolution.url,
+                  comments: obj.comments.count,
+                  likes: obj.likes.count,
+                  caption: obj.caption.text,
+                  video: obj.videos.standard_resolution.url
+                });
+               }
+               else{
+                newJson.push ({
+                  id: obj.id,
+                  link: obj.link,
+                  type: obj.type,
+                  created_time: obj.created_time,
+                  images: obj.images.standard_resolution.url,
+                  comments: obj.comments.count,
+                  likes: obj.likes.count,
+                  caption: obj.caption.text,
+                });
+              }
+              //$("#igjson").append('<img id ="img'+key+'+"style="height: auto; width: 300px;" src="'+obj.images.standard_resolution.url+'" />');
+          });
+          $("#igjson").append(JSON.stringify({posts:newJson}));
+          //var f = new File([JSON.stringify(newJson)], "newJSON.json", {type: "application/json", lastModified: Date()})
+        });
+    });
+  </script>
+  </head>
+  <body>
+    <div id="igjson"></div>
+  </body>
+</html>
