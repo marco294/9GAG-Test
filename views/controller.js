@@ -43,8 +43,10 @@ myApp.directive('caption', function () {
       		contents: '@',
 	    },
 	    link:function(scope,element,attr){
-	    	// split the string into multiple strings with white space separator, then store in an array
-	    	var a = scope.contents.split(/[\s\n]+/);
+		// First, add a white space before @/#
+		// Then, split the string into multiple strings with white space separator 
+		// Last, store in an array
+	    	var a = scope.contents.replace(/([@#])/g, ' $1').split(/[\s\n]+/);
 	    	// loop through each string
 			a.forEach(function(x,i){
 				// if the first character of string is @
