@@ -26,9 +26,11 @@ There are two type of HTTP request in this app.
 2. The HTTP POST request to get the posts details in array according to the array of ids provided in POST request body.
 
 ### Instagram Posts
-models/pullIGposts.js contain a function to fetch 9GAG Instagram posts through http://www.instagram.com/9gag/media/. The link can only get recent 20 posts. However, if we add '?max_id=last_post_id' to the last part of the url, it can get the next 20 posts in IG. 
+models/pullIGposts.js contain a function to fetch 9GAG Instagram posts through http://www.instagram.com/9gag/media/. 
 
-Uncomment line 36-86 in app.js to update the Redis DB with 200 recent posts of 9GAG Instagram
+The link can only get recent 20 posts. However, if we add '?max_id=last_post_id' to the last part of the url, it can get the next 20 posts in IG. 
+
+####Uncomment line 36-86 in app.js to update the Redis DB with 200 recent posts of 9GAG Instagram
 
 ## Frontend
 The frontend veiw used simple bootstrap css and [bootstrap-select](https://silviomoreto.github.io/bootstrap-select/) for select list.
