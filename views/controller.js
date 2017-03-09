@@ -43,10 +43,12 @@ myApp.directive('caption', function () {
       		contents: '@',
 	    },
 	    link:function(scope,element,attr){
-	    	// split the string into multiple strings with white space separator, then store in an array
-	    	var a = scope.contents.split(/[\s\n]+/);
+				// First, add a white space before @/#
+				// Then, split the string into multiple strings with white space separator
+				// Last, store in an array
+	    	var a = scope.contents.replace(/([@#])/g, ' $1').split(/[\s\n]+/);
 	    	// loop through each string
-			a.forEach(function(x,i){
+				a.forEach(function(x,i){
 				// if the first character of string is @
 				if(x[0] == '@'){
 					// Add an IG link to that tag and store it back to that array
@@ -104,6 +106,7 @@ myApp.controller('AppCtrl', function($scope, $http) {
   		$scope.postIds = [];
   		$scope.rows = [];
   		$scope.index = 0;
+			$scope.noPosts = false;
 
   		// Create GET request to get the new sorted postId list according to user selected option
 	  	$http.get('/posts/load/'+$scope.sortedBy.value).then(

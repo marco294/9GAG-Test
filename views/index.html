@@ -9,15 +9,17 @@
   </head>
   <body>
     <div class="container" ng-controller="AppCtrl">
-      <h1 class="inlineBlock">9GAG Web Code Test</h1>
-      <div class="dropdown pull-right">
-        <h3 class="inlineBlock top-buffer">Sorted By:</h3>
-        <!--
-        Create a select list for user to choose how to sort the posts, default sorted by post creation time
-        Read the options name from "sortOptions" defined in controller
-        Return the options value to ng-model which will be uesd for http get request to access new sorted posts list according to the user selection
-        -->
-        <select class="selectpicker adjust" ng-model='sortedBy' ng-init="sortedBy = sortOptions[0]" ng-options="option.name for option in sortOptions"  ng-change='sortPosts()'></select>
+      <div class="row">
+        <h1 class="inlineBlock col-md-7">9GAG Web Code Test</h1>
+        <div class="dropdown pull-right col-md-5">
+          <h3 class="inlineBlock top-buffer">Sorted By:</h3>
+          <!--
+          Create a select list for user to choose how to sort the posts, default sorted by post creation time
+          Read the options name from "sortOptions" defined in controller
+          Return the options value to ng-model which will be uesd for http get request to access new sorted posts list according to the user selection
+          -->
+          <select class="selectpicker adjust" ng-model='sortedBy' ng-init="sortedBy = sortOptions[0]" ng-options="option.name for option in sortOptions"  ng-change='sortPosts()'></select>
+        </div>
       </div>
       <!--
       Infinite scroll view for display posts
@@ -41,7 +43,7 @@
               <img class="photo" ng-src='{{post.images}}'>
             </div>
 
-            <div class="postContents">
+            <div class="postContents adjust">
               <span>Likes: {{post.likes}}</span>
               <span class="pull-right">Comments: {{post.comments}}</span>
               <!-- Use caption directive to return caption with tag linked to corresponding IG site-->
