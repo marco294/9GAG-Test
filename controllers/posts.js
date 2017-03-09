@@ -23,7 +23,6 @@ router.get('/load/:sortBy', function(req, res) {
           }
         });
       }
-
       // else the temp sorted list exists
       else{
         // directly return all ids from the sorted list
@@ -49,12 +48,15 @@ router.post('/details', function(req, res) {
 
 // Helper function to call mutiple HGETALL for each post id in "keys"
 function multiHGETALL(db, keys, callback) {
+    // use pipeline to perform multiple Redis operations
     var pipeline = db.pipeline();
 
+    // call HGETALL for every id store in 'keys'
     keys.forEach(function(key, index){
         pipeline.hgetall(key);
     });
 
+    // exe the operation and return result in callback
     pipeline.exec(function(err, result){
         callback(err, result);
     });

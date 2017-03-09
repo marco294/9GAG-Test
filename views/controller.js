@@ -44,7 +44,7 @@ myApp.directive('caption', function () {
 	    },
 	    link:function(scope,element,attr){
 	    	// split the string into multiple strings with white space separator, then store in an array
-	    	var a = scope.contents.split(" ");
+	    	var a = scope.contents.split(/[\s\n]+/);
 	    	// loop through each string
 			a.forEach(function(x,i){
 				// if the first character of string is @
