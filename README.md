@@ -1,4 +1,4 @@
-# 9gag
+# 9GAG Web Test
 It is a web application developed by **Node.js, Express.js, Redis and Angular.js**.
 
 ## Setup Instruction
