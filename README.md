@@ -73,11 +73,9 @@ To keep the database clean, that list will be set an **expire timer** with 300 s
 
 ## Known Issues
 
-1. Cannot recognise the caption tag that contain Emoji before '@'/'#'.
+1. The relative created time is close to the official IG post time, but not exactly same with the official IG post.
 
-2. The relative created time is close to the official IG post time, but not exactly same with the official IG post.
-
-3. Not support the new multi-photo function in IG
+2. Not support the new multi-photo function in IG
 
 ## Future expected improvement
 
