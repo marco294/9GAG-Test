@@ -2,13 +2,16 @@
 It is a web application developed by **Node.js, Express.js, Redis and Angular.js**.
 
 ## Setup Instruction
+
+Prerequisite: Installed [Node.js](https://nodejs.org/en/download/), so that you can run npm. 
+
 1. Clone the file
 
 2. cd 9GAG-Test
 
 3. npm install
 
-4. npm run
+4. npm start
 
 5. http://localhost:3000/ to use the app
 
